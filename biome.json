@@ -23,7 +23,20 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "nursery": {
+        "useSortedClasses": "warn",
+        "useConsistentTypeDefinitions": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off"
+      },
+      "style": {
+        "useNodejsImportProtocol": "off"
+      },
+      "suspicious": {
+        "noEmptyInterface": "off"
+      }
     },
     "domains": {
       "next": "recommended",
