@@ -25,11 +25,11 @@ export const Input = ({
     <div className="flex flex-col items-start">
       {label && (
         <Label
-          className={`${error && "text-error"} mb-1 flex flex-row gap-1`}
+          className={`${error && "text-destructive"} mb-1 flex flex-row gap-1`}
           htmlFor={id}
         >
           {label}
-          {required && <span className="text-error">*</span>}
+          {required && <span className="text-destructive">*</span>}
         </Label>
       )}
 
@@ -42,7 +42,7 @@ export const Input = ({
 
         <ShadInput
           className={cn(
-            `${error && "border-error"}`,
+            `${error && "border-destructive"}`,
             icon && iconPosition === "left" && "pl-10",
             icon && iconPosition === "right" && "pr-10",
             sizeClasses[size],
@@ -66,7 +66,9 @@ export const Input = ({
         }`}
       >
         <div
-          className={`text-xs opacity-0 ${error && "text-error opacity-100"}`}
+          className={`text-xs opacity-0 ${
+            error && "text-destructive opacity-100"
+          }`}
         >
           {error}
         </div>
