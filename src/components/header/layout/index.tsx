@@ -36,10 +36,10 @@ const CartIcon = ({ itemCount }: CartIconProps) => {
 
   return (
     <Button asChild className="relative" size="sm" variant="outline">
-      <Link href="/checkout">
+      <Link href="/cart">
         <ShoppingCart className="size-4" />
         {itemCount > 0 && (
-          <span className="-right-1 -top-1 absolute flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary font-medium text-white text-xs">
+          <span className="-right-1 -top-1 absolute flex size-4 items-center justify-center rounded-full bg-destructive font-medium text-white text-xs">
             {itemCount > maxCartItemsLabel ? "99+" : itemCount}
           </span>
         )}

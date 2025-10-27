@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ProductCard } from "@/components/product-card";
 import { ProductCardSkeleton } from "@/components/product-card-skeleton";
+import { useCart } from "@/hooks/use-cart";
 import { mockProducts } from "@/utils/mockData/products";
 import type { Product } from "@/utils/types/product";
 
@@ -11,6 +12,7 @@ const API_DELAY_MS = 1500;
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const { addItem } = useCart();
 
   // Simula uma chamada de API
   useEffect(() => {
@@ -26,10 +28,8 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = (productId: number) => {
-    // TODO: Implementar lógica de adicionar ao carrinho
-
-    console.log("Adicionando produto ao carrinho:", productId);
+  const handleAddToCart = (product: Product) => {
+    addItem(product);
   };
 
   return (
@@ -47,7 +47,7 @@ const Products = () => {
           {products.map((product) => (
             <ProductCard
               key={product.id}
-              onAddToCart={() => handleAddToCart(product.id)}
+              onAddToCart={() => handleAddToCart(product)}
               productData={product}
             />
           ))}
