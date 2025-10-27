@@ -170,15 +170,6 @@ npm run format   # Formatação de código (Biome)
 
 ## 🔧 Configuração
 
-### **Variáveis de Ambiente**
-
-O projeto está configurado para funcionar sem variáveis de ambiente adicionais. Para produção, considere adicionar:
-
-```env
-NEXT_PUBLIC_API_URL=https://api.exemplo.com
-NEXT_PUBLIC_GOOGLE_CLIENT_ID=seu_client_id
-```
-
 ### **Imagens**
 
 O projeto está configurado para carregar imagens do Unsplash. Para produção, configure suas próprias imagens ou atualize o `next.config.ts`.
@@ -211,29 +202,3 @@ O projeto é compatível com qualquer plataforma que suporte Next.js:
 3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
-
-## 📝 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
-## 🎨 Design System
-
-O projeto utiliza um design system consistente com:
-
-- **Cores**: Paleta personalizada com cores primárias e secundárias
-- **Tipografia**: Hierarquia clara de textos
-- **Espaçamento**: Sistema de espaçamento consistente
-- **Componentes**: Biblioteca de componentes reutilizáveis
-
-## 🔮 Próximos Passos
-
-- [ ] Integração com API real
-- [ ] Sistema de avaliações de produtos
-- [ ] Wishlist/Favoritos
-- [ ] Histórico de pedidos
-- [ ] Notificações push
-- [ ] PWA (Progressive Web App)
-- [ ] Testes automatizados
-- [ ] CI/CD pipeline
-
----
