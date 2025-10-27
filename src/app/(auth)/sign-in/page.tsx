@@ -51,23 +51,25 @@ const SignInPage = () => {
   }
 
   return (
-    <main className="flex h-screen w-screen">
-      <section className="flex w-5/12 flex-col justify-center px-12 py-16">
-        <div className="mb-12 flex items-center gap-3">
+    <main className="flex h-screen w-screen flex-col lg:flex-row">
+      <section className="flex w-full flex-col justify-center py-8 pr-4 pl-6 sm:py-12 lg:w-5/12 lg:py-16">
+        <div className="mb-8 flex items-center gap-3 lg:mb-12">
           <Image alt="Logo" height={40} src="/logo.png" width={40} />
-          <span className="font-semibold text-xl">Colmeia Checkout</span>
+          <span className="font-semibold text-lg lg:text-xl">
+            Colmeia Checkout
+          </span>
         </div>
 
-        <div className="mb-12">
-          <h1 className="mb-3 font-bold text-4xl text-brand-primary">
+        <div className="mb-8 lg:mb-12">
+          <h1 className="mb-3 font-bold text-2xl text-brand-primary sm:text-3xl lg:text-4xl">
             Bem-vindo de volta
           </h1>
-          <p className="text-muted-foreground text-xl">
+          <p className="text-base text-muted-foreground sm:text-lg lg:text-xl">
             Soluções Digitais para Automação Financeira
           </p>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           <Button className="w-full py-3" size={"lg"} variant={"outline"}>
             <GoogleIcon className="" size={24} />
             Entrar com Google
@@ -79,7 +81,10 @@ const SignInPage = () => {
             <div className="h-px w-full bg-border" />
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="space-y-4 sm:space-y-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             {error && (
               <div className="rounded-md bg-red-50 p-3 text-red-600 text-sm">
                 {error}
@@ -125,7 +130,9 @@ const SignInPage = () => {
           </p>
         </div>
       </section>
-      <SlidingCards />
+      <div className="hidden w-full lg:flex">
+        <SlidingCards />
+      </div>
     </main>
   );
 };

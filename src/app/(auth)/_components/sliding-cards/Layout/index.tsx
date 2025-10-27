@@ -12,7 +12,7 @@ export const SlidingCards = ({ data, getIcon }: ISlidingCardsData) => {
   const speed = 3000;
 
   return (
-    <div className="w-7/12 p-4">
+    <div className="w-full p-4">
       <div className="relative h-full w-full overflow-hidden rounded-2xl bg-brand-primary">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1),transparent_60%)]" />
 
