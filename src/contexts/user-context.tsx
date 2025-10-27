@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getCurrentUser } from "@/actions/auth";
+import { getUser, removeUser, saveUser } from "@/utils/functions/localStorage";
 import type { User, UserSession } from "@/utils/types/user";
 
 const UserContext = createContext<UserSession | null>(null);
@@ -22,18 +22,23 @@ export function UserProvider({
   initialUser = null,
 }: UserProviderProps) {
   const [user, setUser] = useState<User | null>(initialUser);
-  const [loading, setLoading] = useState(!initialUser);
+  const [loading, setLoading] = useState(false);
 
-  const fetchUser = useCallback(async () => {
-    try {
-      setLoading(true);
-      const userData = await getCurrentUser();
-      setUser(userData);
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
+  const fetchUser = useCallback(() => {
+    setLoading(true);
+    const userData = getUser();
+    setUser(userData);
+    setLoading(false);
+  }, []);
+
+  const login = useCallback((userData: User) => {
+    saveUser(userData);
+    setUser(userData);
+  }, []);
+
+  const logout = useCallback(() => {
+    removeUser();
+    setUser(null);
   }, []);
 
   useEffect(() => {
@@ -46,6 +51,8 @@ export function UserProvider({
     user,
     loading,
     refetch: fetchUser,
+    login,
+    logout,
   };
 
   return (

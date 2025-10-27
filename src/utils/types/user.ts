@@ -2,13 +2,12 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  imageUrl?: string | null;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface UserSession {
   user: User | null;
   loading: boolean;
-  refetch: () => Promise<void>;
+  refetch: () => void;
+  login: (user: User) => void;
+  logout: () => void;
 }

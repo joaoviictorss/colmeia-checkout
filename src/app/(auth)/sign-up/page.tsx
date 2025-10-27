@@ -3,17 +3,21 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { signUp } from "@/actions/auth";
 import { Input } from "@/components/input";
 import { Button } from "@/components/ui/button";
 import { GoogleIcon } from "@/components/ui/google-icon";
+import { useUser } from "@/contexts/user-context";
+import { signUp } from "@/utils/functions/auth";
 import { type SignUpFormData, signUpSchema } from "@/utils/validations/auth";
 import { SlidingCards } from "../_components/sliding-cards";
 
 const SignUpPage = () => {
   const [error, setError] = useState("");
+  const router = useRouter();
+  const { login, user, loading } = useUser();
 
   const {
     register,
@@ -23,15 +27,28 @@ const SignUpPage = () => {
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = async (data: SignUpFormData) => {
+  useEffect(() => {
+    if (!loading && user) {
+      router.push("/products");
+    }
+  }, [user, loading, router]);
+
+  const onSubmit = (data: SignUpFormData) => {
     setError("");
 
-    const result = await signUp({}, data);
+    const result = signUp(data);
 
     if (result?.message) {
       setError(result.message);
+    } else if (result?.success && result?.user) {
+      login(result.user);
+      router.push("/products");
     }
   };
+
+  if (user) {
+    return null;
+  }
 
   return (
     <main className="flex h-screen w-screen">

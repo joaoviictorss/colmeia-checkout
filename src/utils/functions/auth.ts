@@ -1,51 +1,74 @@
-import "server-only";
-
-import { cookies } from "next/headers";
-import { decrypt } from "@/utils/functions/session";
 import { mockUsers } from "@/utils/mockData/auth";
 import type { User } from "@/utils/types/user";
+import type { SignInFormData, SignUpFormData } from "@/utils/validations/auth";
 
-export async function getCurrentUser(): Promise<User | null> {
-  try {
-    const cookie = (await cookies()).get("session")?.value;
-    const session = await decrypt(cookie);
+function findUserByEmail(email: string) {
+  return mockUsers.find((user) => user.email === email);
+}
 
-    if (!session?.userId || typeof session.userId !== "string") {
-      return null;
-    }
+function findUserByCredentials(email: string, password: string) {
+  return mockUsers.find(
+    (user) => user.email === email && user.password === password
+  );
+}
 
-    const user = mockUsers.find((u) => u.id === session.userId);
+export function signUp(data: SignUpFormData): {
+  success: boolean;
+  user?: User;
+  message?: string;
+} {
+  const { name, email, password } = data;
 
-    if (!user) {
-      return null;
-    }
+  const userAlreadyExists = findUserByEmail(email);
 
+  if (userAlreadyExists) {
     return {
-      id: user.id,
-      email: user.email,
-      name: user.name,
+      success: false,
+      message: "Uma conta já existe com esse email",
     };
-  } catch {
-    return null;
   }
+
+  const newUser = {
+    id: (mockUsers.length + 1).toString(),
+    name,
+    email,
+    password,
+  };
+
+  mockUsers.push(newUser);
+
+  return {
+    success: true,
+    user: {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+    },
+  };
 }
 
-export async function getCurrentUserId(): Promise<string | null> {
-  try {
-    const cookie = (await cookies()).get("session")?.value;
-    const session = await decrypt(cookie);
+export function signIn(data: SignInFormData): {
+  success: boolean;
+  user?: User;
+  message?: string;
+} {
+  const { email, password } = data;
 
-    if (!session?.userId || typeof session.userId !== "string") {
-      return null;
-    }
+  const user = findUserByCredentials(email, password);
 
-    return session.userId;
-  } catch {
-    return null;
+  if (!user) {
+    return {
+      success: false,
+      message: "Usuário ou senhas inválidos",
+    };
   }
-}
 
-export async function isAuthenticated(): Promise<boolean> {
-  const userId = await getCurrentUserId();
-  return !!userId;
+  return {
+    success: true,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    },
+  };
 }

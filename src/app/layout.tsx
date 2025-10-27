@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { getCurrentUser } from "@/actions/auth";
 import { UserProvider } from "@/contexts/user-context";
 
 const geistSans = Geist({
@@ -19,17 +18,15 @@ export const metadata: Metadata = {
   description: "Colmeia Checkout - Checkout de produtos da Colmeia.io",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getCurrentUser();
-
   return (
     <html lang="pt-BR">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <UserProvider initialUser={user}>{children}</UserProvider>
+        <UserProvider>{children}</UserProvider>
       </body>
     </html>
   );
